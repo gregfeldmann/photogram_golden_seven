@@ -2,5 +2,21 @@
 
 <p><%= @the_caption %> </p>
 
-<img src=" <%=@the_source %>">
 
+<img src="<%= @the_source%>">
+
+<p>
+  21 minutes ago
+</p>
+
+<a href="/photos" class="btn btn-default">
+  Go back
+</a>
+
+<a href="/photos/121/edit" class="btn btn-default">
+  Edit
+</a>
+
+<a href="/delete_photo/121" class="btn btn-default">
+  Delete
+</a>
