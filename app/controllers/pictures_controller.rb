@@ -1,21 +1,5 @@
 class PicturesController < ApplicationController
    
-    def index
-        @photos = Photo.all
-    
-    photo_info.each do |photo_hash|
-        
-    
-       render("pic_templates/index.html.erb")
-    end
-
-    def show
-        @photo= Photo.find(params[:id])
-    
-       @the_source = @photo.source
-       @the_caption = @photo.caption
-    end
-
     def new_form
         render("pic_templates/new_form.html.erb")
     end    
@@ -33,15 +17,32 @@ class PicturesController < ApplicationController
         render("pic_templates/create_row.html.erb")
         
     end
-   
+    
+    def index
+        @photos = Photo.all
+    
+    @list_of_photos = Photo.order(created_at => :desc)
+   # photo_info.each do |photo_hash|
+        
+    
+       render("pic_templates/index.html.erb")
+    end
 
-    def show       
+    def show
+        
+        the_id_number = params["an_id"]
+    
+       @photo = Photo.find(the_id_number)
+        
+       @the_source = @photo.source
+       
+       @the_caption = @photo.caption
        
         render("pic_templates/show.html.erb")
     end
     
     def edit_form
-    @the_id_number = params["id"]
+    @photo = params[:some_id]
        
       @pic = Photo.find(@the_id_number)
        
@@ -52,12 +53,14 @@ class PicturesController < ApplicationController
     end
     
     def update_row
-         @the_id_number = params["id"]
+        p = Photo.find(params[:the_id])
        
-      @pic = Photo.find(@the_id_number)
+       p.source = params[:the_source]
+       p.caption = params[:the_caption]
        
-       @the_source = @pic.source
-       @the_caption = @pic.caption
+       p.save
+       
+       @the_id = p.id
        
          render("pic_templates/update_row.html.erb") 
     end    
