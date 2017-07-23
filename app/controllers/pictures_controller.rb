@@ -1,5 +1,21 @@
 class PicturesController < ApplicationController
    
+    def index
+        @photos = Photo.all
+    
+    photo_info.each do |photo_hash|
+        
+    
+       render("pic_templates/index.html.erb")
+    end
+
+    def show
+        @photo= Photo.find(params[:id])
+    
+       @the_source = @photo.source
+       @the_caption = @photo.caption
+    end
+
     def new_form
         render("pic_templates/new_form.html.erb")
     end    
@@ -11,31 +27,21 @@ class PicturesController < ApplicationController
         p.caption = params["the_caption"]
         p.save
         
+      z = Photo.all
+      @photo_count = z.count
+        
         render("pic_templates/create_row.html.erb")
         
     end
-    
-    def index
-        
-        render("pic_templates/index.html.erb")
+   
 
-    end
-    
-    def show
-       @the_id_number = params["an_id"]
-       
-      @pic = Photo.find(@the_id_number)
-       
-       @the_source = @pic.source
-       @the_caption = @pic.caption
-       
-       
+    def show       
        
         render("pic_templates/show.html.erb")
     end
     
     def edit_form
-    @the_id_number = params["an_id"]
+    @the_id_number = params["id"]
        
       @pic = Photo.find(@the_id_number)
        
@@ -46,7 +52,7 @@ class PicturesController < ApplicationController
     end
     
     def update_row
-         @the_id_number = params["an_id"]
+         @the_id_number = params["id"]
        
       @pic = Photo.find(@the_id_number)
        
@@ -65,4 +71,3 @@ class PicturesController < ApplicationController
     
     
 end
-    
