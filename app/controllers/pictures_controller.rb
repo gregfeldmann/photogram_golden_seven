@@ -11,20 +11,18 @@ class PicturesController < ApplicationController
         p.caption = params["the_caption"]
         p.save
         
-      z = Photo.all
-      @photo_count = z.count
+      @photo_count = Photo.count
         
         render("pic_templates/create_row.html.erb")
         
     end
     
+      # @list_of_photos = Photo.order(created_at => :desc) goes below
+    
     def index
-        @photos = Photo.all
     
-    @list_of_photos = Photo.order(created_at => :desc)
-   # photo_info.each do |photo_hash|
+        @photo_list = Photo.all
         
-    
        render("pic_templates/index.html.erb")
     end
 

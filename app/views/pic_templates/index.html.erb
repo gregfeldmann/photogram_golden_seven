@@ -17,6 +17,20 @@
 <a href="/photos/new">
   Add a new photo
 </a>
+    
+<% @photo_list.each do |the_photo| %>
+  <div class="thumbnail">
+    <img src="<%= the_photo.source %>">
+
+<div class = "caption">
+      <%= the_photo.caption %>
+  </div>
+</div>
+<% end %>
+
+
+
+
 
 
 
