@@ -11,31 +11,36 @@ class PicturesController < ApplicationController
         p.caption = params["the_caption"]
         p.save
         
+      @photo_count = Photo.count
+        
         render("pic_templates/create_row.html.erb")
         
     end
     
-    def index
-        
-        render("pic_templates/index.html.erb")
-
-    end
+      # @list_of_photos = Photo.order(created_at => :desc) goes below
     
+    def index
+    
+        @photo_list = Photo.all
+        
+       render("pic_templates/index.html.erb")
+    end
+
     def show
-       @the_id_number = params["an_id"]
+        
+        the_id_number = params["an_id"]
+    
+       @photo = Photo.find(the_id_number)
+        
+       @the_source = @photo.source
        
-      @pic = Photo.find(@the_id_number)
-       
-       @the_source = @pic.source
-       @the_caption = @pic.caption
-       
-       
+       @the_caption = @photo.caption
        
         render("pic_templates/show.html.erb")
     end
     
     def edit_form
-    @the_id_number = params["an_id"]
+    @photo = params[:some_id]
        
       @pic = Photo.find(@the_id_number)
        
@@ -46,12 +51,14 @@ class PicturesController < ApplicationController
     end
     
     def update_row
-         @the_id_number = params["an_id"]
+        p = Photo.find(params[:the_id])
        
-      @pic = Photo.find(@the_id_number)
+       p.source = params[:the_source]
+       p.caption = params[:the_caption]
        
-       @the_source = @pic.source
-       @the_caption = @pic.caption
+       p.save
+       
+       @the_id = p.id
        
          render("pic_templates/update_row.html.erb") 
     end    
@@ -65,4 +72,3 @@ class PicturesController < ApplicationController
     
     
 end
-    
